@@ -64,7 +64,7 @@ def user():
 @app.route("/tickets")
 def tickets():
     if "user" in session:
-        return "<h1>Twoje bilety</h1>"
+        return render_template("tickets.html")
     else:
         flash("Musisz być zalogowany, żeby zobaczyć bilety.")
         return render_template("tickets.html")
