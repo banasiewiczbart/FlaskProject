@@ -30,6 +30,7 @@ def login():
 		user = request.form["nm"]
 		session["user"] = user
 
+
 		
 		flash("Login Succesfull")
 		return redirect(url_for("user"))
@@ -45,7 +46,8 @@ def user():
 	email = None
 	if "user" in session:
 		user = session["user"]
-		
+		flash(f"Zalogowany jako: {user}")  # <-- Flash z loginem
+
 		if request.method == "POST":
 			email = request.form["email"]
 			session["email"] = email
@@ -58,6 +60,16 @@ def user():
 	else:
 		flash("you're not logged in")
 		return redirect(url_for("login"))
+
+@app.route("/tickets")
+def tickets():
+    if "user" in session:
+        return "<h1>Twoje bilety</h1>"
+    else:
+        flash("Musisz być zalogowany, żeby zobaczyć bilety.")
+        return render_template("tickets.html")
+
+    return render_template("tickets.html")  # lub co tam chcesz
 
 @app.route("/logout")
 def logout():
